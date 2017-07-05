@@ -1,6 +1,7 @@
 # CompositionObserver.js
 
-InputEvent.isComposing（[MDN](https://developer.mozilla.org/en-US/docs/Web/API/InputEvent/isComposing)）に対応していない環境で `input` イベントハンドラーで入力の変換中かどうかをチェックするためのものです。  
+InputEvent.isComposing（[MDN](https://developer.mozilla.org/en-US/docs/Web/API/InputEvent/isComposing)）に対応していない環境でも `input` イベントハンドラーで入力の変換中かどうかをチェックするためのものです。  
+対応している環境の場合はネイティブの値を返します。
 
 ## 使い方
 
