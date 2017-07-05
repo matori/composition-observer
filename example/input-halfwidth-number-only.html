@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <title>CompositionObserver.js Demo</title>
+  <style>
+    h1 {
+      font-size: 18px;
+    }
+    dt {
+      margin-top: 1em;
+      font-weight: bold;
+    }
+    code {
+      margin: 0.25em;
+    }
+    dd {
+      margin-left: 0;
+    }
+  </style>
+  <script src="../lib/index.js"></script>
+  <script src="script.js" defer></script>
+</head>
+<body>
+
+<h1>半角数字（数値ではない）だけを入力させたいフォームの例。</h1>
+<p>全角数字を半角に変換し、数字以外を取り除く。</p>
+
+<form action="javascript:void 0;">
+  <dl>
+    <dt><code>input</code>イベントのみ</dt>
+    <dd>
+      <label for="input1">電話番号入力</label>
+      <input type="text" id="input1">
+    </dd>
+    <dt><code>isComposing</code>もチェックして<code>true</code>ならば処理をスキップする</dt>
+    <dd>
+      <label for="input2">電話番号入力</label>
+      <input type="text" id="input2">
+    </dd>
+  </dl>
+</form>
+
+</body>
+</html>

@@ -1,0 +1,19 @@
+{
+  "name": "composition-observer",
+  "version": "1.0.0",
+  "description": "",
+  "main": "lib/index.js",
+  "jsnext:main": "src/CompositionObserver.js",
+  "scripts": {
+    "build": "babel src/CompositionObserver.js -o lib/index.js",
+    "dev": "babel src/CompositionObserver.js -o lib/index.js -s inline -w"
+  },
+  "author": "matori <pnr.matori@gmail.com>",
+  "license": "MIT",
+  "devDependencies": {
+    "babel-cli": "^6.24.1",
+    "babel-plugin-add-module-exports": "^0.2.1",
+    "babel-plugin-transform-es2015-modules-umd": "^6.24.1",
+    "babel-preset-es2015": "^6.24.1"
+  }
+}
