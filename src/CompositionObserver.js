@@ -41,7 +41,7 @@ class CompositionObserver {
   _detachEvents() {
     const ctx = this._ctx;
     ctx.removeEventListener("compositionstart", this._onCompositionStart, false);
-    ctx.removeEventListener("compositionEnd", this._onCompositionEnd, false);
+    ctx.removeEventListener("compositionend", this._onCompositionEnd, false);
   }
 
   _setHandlers() {
