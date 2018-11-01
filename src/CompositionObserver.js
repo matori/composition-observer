@@ -1,35 +1,27 @@
 "use strict";
 
-const canUseIsComposingOnInput = "InputEvent" in window && "isComposing" in window.InputEvent.prototype;
+const canUseIsComposingOnInput = "InputEvent" in window && window.InputEvent.prototype.hasOwnProperty('isComposing');
+const canUseIsComposingOnKeyboard = window.KeyboardEvent.prototype.hasOwnProperty("isComposing");
 
 class CompositionObserver {
 
   constructor(ctx = window) {
-
     this._ctx = ctx;
+    this._enabled = !canUseIsComposingOnInput || !canUseIsComposingOnKeyboard;
     this._observing = false;
     this._isComposing = false;
 
-    if(!canUseIsComposingOnInput) {
+    if (this._enabled) {
       this._setHandlers();
     }
-  }
-
-  isComposing(evt) {
-    return canUseIsComposingOnInput ? evt.isComposing : this._isComposing;
   }
 
   _onCompositionStart() {
     this._isComposing = true;
   }
 
-  _onCompositionEnd(evt) {
+  _onCompositionEnd() {
     this._isComposing = false;
-    const event = new Event("input", {
-      bubbles: true,
-      cancelable: true
-    });
-    evt.target.dispatchEvent(event);
   }
 
   _attachEvents() {
@@ -50,7 +42,7 @@ class CompositionObserver {
   }
 
   _start() {
-    if (this._observing === true) {
+    if (this._observing) {
       return;
     }
     this._observing = true;
@@ -59,7 +51,7 @@ class CompositionObserver {
   }
 
   _stop() {
-    if (this._observing === false) {
+    if (!this._observing) {
       return;
     }
     this._observing = false;
@@ -68,16 +60,27 @@ class CompositionObserver {
   }
 
   start() {
-    if (!canUseIsComposingOnInput) {
+    if (this._enabled) {
       this._start();
     }
   }
 
   stop() {
-    if (!canUseIsComposingOnInput) {
+    if (this._enabled) {
       this._stop();
     }
   }
+
+  isComposing(event) {
+    const eventType = event.type;
+    if (eventType === "keydown" || eventType === "keyup") {
+      return canUseIsComposingOnKeyboard ? event.isComposing : this._isComposing;
+    }
+    if (eventType === "input" || eventType === "beforeinput") {
+      return canUseIsComposingOnInput ? event.isComposing : this._isComposing;
+    }
+  }
+
 }
 
 export default CompositionObserver;

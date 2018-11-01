@@ -1,36 +1,41 @@
 (function () {
 
-  function convertNumberOnly(text) {
+  function convertToNumberOnly(text) {
     text = text.replace(/[０-９]/g, function (str) {
       return String.fromCharCode(str.charCodeAt(0) - 0xFEE0);
     });
     return text.replace(/[^0-9]/g, "");
   }
 
-  function convertValue(evt) {
-    var input = evt.target;
-    input.value = convertNumberOnly(input.value);
+  function convertValue(event) {
+    var input = event.target;
+    input.value = convertToNumberOnly(input.value);
   }
 
   //------------//
 
-  function handler1(evt) {
-    convertValue(evt);
+  function onIputHandler1(event) {
+    convertValue(event);
   }
 
-  document.getElementById("input1").addEventListener("input", handler1, false);
+  document.getElementById("input1").addEventListener("input", onIputHandler1, false);
 
   //------------//
 
-  var compositionObserver = new window.CompositionObserver();
+  var compositionObserver = new window.CompositionObserver.default();
   compositionObserver.start();
 
-  function handler2(evt) {
-    if (compositionObserver.isComposing(evt)) {
+  function onInputHandler2(event) {
+    if (compositionObserver.isComposing(event)) {
       return;
     }
-    convertValue(evt);
+    convertValue(event);
   }
 
-  document.getElementById("input2").addEventListener("input", handler2, false);
+  function onCompositionend(event) {
+    convertValue(event);
+  }
+
+  document.getElementById("input2").addEventListener("input", onInputHandler2, false);
+  document.getElementById("input2").addEventListener("compositionend", onCompositionend, false);
 })();
